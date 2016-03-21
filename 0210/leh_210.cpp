@@ -17,7 +17,7 @@ using namespace std;
  * a non-negative integer.
  * @param n the non-negative integral input
  * @param opCount a reference to the number of 
- * basic operation
+ * basic operations
  * @return the maximum power of 2 not exceeding n
  */
 uint find_max_power( uint n, uint & opCount )
@@ -51,7 +51,7 @@ int main( int argc, char * argv[] )
     return 1;
   }
 
-  stringstream ss( argv[1]);
+  stringstream ss( argv[1] );
   uint n;
   ss >> n;
 
@@ -59,7 +59,9 @@ int main( int argc, char * argv[] )
   uint result = find_max_power( n, opCount );
 
   // Output the result
-  // cout << "The highest power of 2 in " << n <<  " is " <<
-  // result << "." << endl;
-  cout << n << " " << opCount << endl;
+  cout << "The highest power of 2 in " << n <<  " is " <<
+     result << "." << endl;
+  cerr << n << " " << opCount << endl;
+
+  return 0;
 }
