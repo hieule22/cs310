@@ -17,16 +17,18 @@ typedef unsigned int uint;
 using namespace std;
 
 /**
- * Overloads the less-than operator to compare two unint-uint pairs by
- * their second elements.
- * @param a the first pair
- * @param b the second pair
- * @return the truth value of a < b on the second elements
+ * Creates a class that can compare two pairs by their second element.
+ * Boolean operator is reversed because priority_queue creates a max
+ * heap by default.
  */
-bool operator< ( const pair<uint, uint> & a, const pair<uint, uint> & b )
+class PairComparator
 {
-  return a.second < b.second;
-}
+public:
+  bool operator() ( const pair<uint, uint> & a, const pair<uint, uint> & b )
+  {
+    return a.second > b.second;
+  }
+};
 
 /**
  * Computes the weight and prints out the shortest path from a source
@@ -49,7 +51,10 @@ void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
   }
 
   dist.at( s ) = 0;
-  priority_queue<pair<uint, uint> > pq;
+
+  priority_queue< pair<uint, uint>,
+		  vector<pair<uint, uint> >,
+		  PairComparator > pq;
   pq.push( make_pair( s, 0 ) );
 
   while( !pq.empty() )
