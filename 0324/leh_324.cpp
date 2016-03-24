@@ -35,13 +35,14 @@ public:
  * vertex to all other vertices in a weighted digraph with non-negative
  * edge weights.
  * @param s the start vertex
- * @param graph the adjacency list representation fo the graph
+ * @param graph the adjacency list representation of the graph
  */
 void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
 {
   vector< uint > dist;
   vector< bool > known;
   vector< uint > path;
+
   const uint DUMMY = 0;
   for( uint i = 0; i < graph.size(); i++ )
   {
