@@ -59,21 +59,22 @@ void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
 
   while( !pq.empty() )
   {
-    uint v = pq.top().first;
+    uint u = pq.top().first;
     pq.pop();
 
-    if( !known.at( v ) )
+    if( !known.at( u ) )
     {
-      known.at( v ) = true;
-      for( auto iter = graph.at( v ).begin(); iter != graph.at( v ).end(); ++iter )
+      known.at( u ) = true;
+      for( auto iter = graph.at( u ).begin(); iter != graph.at( u ).end(); ++iter )
       {
-	if( !known.at( iter->first ) && 
-	    dist.at( iter->first ) > dist.at( v ) + iter->second )
-	{
-	  dist.at( iter->first ) = dist.at( v ) + iter->second;
-	  pq.push( make_pair( iter->first, dist.at( iter-> first ) ) );
-	  path.at( iter->first ) = v;
-	}
+      	uint v = iter->first;
+      	uint weight = iter->second;
+				if( !known.at( v ) && dist.at( v ) > dist.at( u ) + weight )
+				{
+	  			dist.at( v ) = dist.at( u ) + weight;
+	  			path.at( v ) = u;
+	  			pq.push( make_pair( v, weight ) );
+				}
       }
     }
   }
