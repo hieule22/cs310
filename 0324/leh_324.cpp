@@ -31,10 +31,10 @@ public:
 };
 
 /**
- * Computes the weight and prints out the shortest path from a source
+ * Computes the weight and prints out the shortest path from a start
  * vertex to all other vertices in a weighted digraph with non-negative
  * edge weights.
- * @param s the source vertex
+ * @param s the start vertex
  * @param graph the adjacency list representation fo the graph
  */
 void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
@@ -50,12 +50,11 @@ void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
     path.push_back( DUMMY );
   }
 
-  dist.at( s ) = 0;
-
   priority_queue< pair<uint, uint>,
 		  vector<pair<uint, uint> >,
 		  PairComparator > pq;
   pq.push( make_pair( s, 0 ) );
+  dist.at( s ) = 0;
 
   while( !pq.empty() )
   {
@@ -65,7 +64,7 @@ void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
     if( !known.at( current ) )
     {
       known.at( current ) = true;
-      // Iterate through all the neighbors of current node
+      // Update all the unknown neighbors of current node
       for( auto iter = graph.at( current ).begin(); 
 	   iter != graph.at( current ).end(); ++iter )
       {
@@ -93,6 +92,9 @@ void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
   {
     cout << "v" << i << ": ";
     uint frontier = path.at( i );
+    // Retrace the shortest path until the dummy node is hit
+    // The loop will not execute if i = s or i is not reachable
+    // from s
     while( frontier != DUMMY )
     {
       cout << frontier << " ";
@@ -149,8 +151,8 @@ int main()
   v7list.push_back( make_pair( 6, 1 ) );
   graph.push_back( v7list );
 
-  uint source = 1;
-  dijkstra( source, graph );
+  uint s = 1;
+  dijkstra( s, graph );
 
   return 0;
 }
