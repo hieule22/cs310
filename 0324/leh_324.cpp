@@ -59,22 +59,25 @@ void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
 
   while( !pq.empty() )
   {
-    uint u = pq.top().first;
+    uint current = pq.top().first;
     pq.pop();
 
-    if( !known.at( u ) )
+    if( !known.at( current ) )
     {
-      known.at( u ) = true;
-      for( auto iter = graph.at( u ).begin(); iter != graph.at( u ).end(); ++iter )
+      known.at( current ) = true;
+      // Iterate through all the neighbors of current node
+      for( auto iter = graph.at( current ).begin(); 
+	   iter != graph.at( current ).end(); ++iter )
       {
-      	uint v = iter->first;
-      	uint weight = iter->second;
-				if( !known.at( v ) && dist.at( v ) > dist.at( u ) + weight )
-				{
-	  			dist.at( v ) = dist.at( u ) + weight;
-	  			path.at( v ) = u;
-	  			pq.push( make_pair( v, weight ) );
-				}
+      	uint neighbor = iter->first;
+      	uint edge_weight = iter->second;
+	if( !known.at( neighbor ) && 
+	    dist.at( neighbor ) > dist.at( current ) + edge_weight )
+	{
+	  dist.at( neighbor ) = dist.at( current ) + edge_weight;
+	  path.at( neighbor ) = current;
+	  pq.push( make_pair( neighbor, dist.at( neighbor ) ) );
+	}
       }
     }
   }
@@ -89,11 +92,13 @@ void dijkstra( uint s, const vector<list<pair<uint, uint> > > & graph )
   for( uint i = 1; i < graph.size(); i++ )
   {
     cout << "v" << i << ": ";
-    uint previous = path.at( i );
-    while( previous != DUMMY )
+    uint frontier = path.at( i );
+    while( frontier != DUMMY )
     {
-      cout << previous << " ";
-      previous = path.at( previous );
+      cout << frontier << " ";
+      // Update frontier to the node preceding it on the 
+      // shortest path from s to i.
+      frontier = path.at( frontier );
     }
     cout << endl;
   }
