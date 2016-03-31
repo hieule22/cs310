@@ -130,7 +130,7 @@ int main( int argc, char * argv [] )
     cout << endl;
   }
 
-  // Print out one minimum combination of coins
+  // Print out one optimal combination of coins
   vector< uint > denomCount;
   for( uint i = 0; i < denom.size(); i++ )
     denomCount.push_back( 0 );
