@@ -9,7 +9,6 @@
 #include <sstream>
 #include <vector>
 #include <climits>
-#include <cassert>
 #include "matrix.h"
 
 using namespace std;
@@ -58,7 +57,6 @@ uint opt( uint i, uint a, const vector< uint > & denom, Matrix< uint > & memo )
 void findOpt( uint i, uint a, const vector< uint > & denom, 
 	      const Matrix< uint > & memo, vector< uint > & denomCount )
 {
-	assert( i < denom.size() && a < memo.numrows() );
   // Base cases: amount equals 0 or there are only pennies left to fill
   if( a == 0 )
     return;
