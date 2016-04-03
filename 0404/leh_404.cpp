@@ -57,16 +57,17 @@ uint opt( uint i, uint a, const vector< uint > & denom, Matrix< uint > & memo )
 void backtrace( uint i, uint a, const vector< uint > & denom, 
 	      const Matrix< uint > & memo, vector< uint > & denomCount )
 {
-  // Base cases: amount equals 0 or there are only pennies left to fill
+  // Base case: Amount equals 0
   if( a == 0 )
     return;
-
+  // Base case: There are only pennies left to produce
   if( i == 0 )
   {
     denomCount.at( i ) += a;
     return;
   }
-
+  // Determine whether to stay at the current denomination and decrease
+  // amount, or move to a lower denomination.
   if( a < denom.at( i ) || memo.at( i - 1, a ) == memo.at( i , a ) )
   {
     backtrace( i - 1, a, denom, memo, denomCount );
