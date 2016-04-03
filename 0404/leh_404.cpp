@@ -66,15 +66,16 @@ void backtrace( uint i, uint a, const vector< uint > & denom,
     denomCount.at( i ) += a;
     return;
   }
-  // Determine whether to stay at the current denomination and decrease
-  // amount, or move to a lower denomination.
+  // Determine whether to move to a smaller denomination, 
+  // or stay at the current denomination and decrease amount
   if( a < denom.at( i ) || memo.at( i - 1, a ) == memo.at( i , a ) )
   {
     backtrace( i - 1, a, denom, memo, denomCount );
   }
   else
   {
-    denomCount.at( i )++;
+    // Increment the number of coins from the current denomination
+    denomCount.at( i )++; 
     backtrace( i, a - denom.at(i), denom, memo, denomCount );
   }
 }
@@ -132,7 +133,7 @@ int main( int argc, char * argv [] )
     cout << endl;
   }
 
-  // Compute and print out an optimal combination of coins
+  // Determine and print out an optimal combination of coins
   vector< uint > denomCount;
   for( uint i = 0; i < denom.size(); i++ )
     denomCount.push_back( 0 );
