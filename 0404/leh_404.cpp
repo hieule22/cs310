@@ -54,12 +54,13 @@ uint opt( uint i, uint a, const vector< uint > & denom, Matrix< uint > & memo )
  * @param memo the memo table
  * @param denomCount the numbers of coins for each denomination
  */
-void findOpt( uint i, uint a, const vector< uint > & denom, 
+void backtrace( uint i, uint a, const vector< uint > & denom, 
 	      const Matrix< uint > & memo, vector< uint > & denomCount )
 {
   // Base cases: amount equals 0 or there are only pennies left to fill
   if( a == 0 )
     return;
+
   if( i == 0 )
   {
     denomCount.at( i ) += a;
@@ -68,12 +69,12 @@ void findOpt( uint i, uint a, const vector< uint > & denom,
 
   if( a < denom.at( i ) || memo.at( i - 1, a ) == memo.at( i , a ) )
   {
-    findOpt( i - 1, a, denom, memo, denomCount );
+    backtrace( i - 1, a, denom, memo, denomCount );
   }
   else
   {
     denomCount.at( i )++;
-    findOpt( i, a - denom.at(i), denom, memo, denomCount );
+    backtrace( i, a - denom.at(i), denom, memo, denomCount );
   }
 }
 
@@ -130,12 +131,12 @@ int main( int argc, char * argv [] )
     cout << endl;
   }
 
-  // Print out one optimal combination of coins
+  // Compute and print out an optimal combination of coins
   vector< uint > denomCount;
   for( uint i = 0; i < denom.size(); i++ )
     denomCount.push_back( 0 );
 
-  findOpt( denom.size() - 1, amount, denom, memo, denomCount );
+  backtrace( denom.size() - 1, amount, denom, memo, denomCount );
 
   cout << endl << "Coins used:" << endl;
   for( uint i = 0; i < denom.size(); i++ )
